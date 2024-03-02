@@ -19,7 +19,7 @@ config: {
       name: '𝐊𝐒𝐇𝐈𝐓𝐈𝐙',
       gender: '𝐌𝐚𝐥𝐞',
       age: '19',
-      facebookLink: 'https://www.facebook.com/profile.php?id=100074772216830',
+      facebookLink: 'https://www.facebook.com/profile.php?id=100075373879287',
     };
 
     const bold = 'https://i.imgur.com/Ueq0Ln1.mp4'; // Replace with your Google Drive videoid link https://drive.google.com/uc?export=download&id=here put your video id
