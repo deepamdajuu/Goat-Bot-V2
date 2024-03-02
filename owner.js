@@ -16,13 +16,13 @@ config: {
   onStart: async function ({ api, event }) {
   try {
     const ownerInfo = {
-      name: '𝐈𝐭𝐚𝐜𝐡𝐢 𝐌𝐚𝐦𝐚',
+      name: '𝐊𝐒𝐇𝐈𝐓𝐈𝐙',
       gender: '𝐌𝐚𝐥𝐞',
-      age: '28',
+      age: '17',
       facebookLink: 'https://www.facebook.com/profile.php?id=100074772216830',
     };
 
-    const bold = 'https://i.imgur.com/DDO686J.mp4'; // Replace with your Google Drive videoid link https://drive.google.com/uc?export=download&id=here put your video id
+    const bold = 'https://imgur.com/a/iyD5do3'; // Replace with your Google Drive videoid link https://drive.google.com/uc?export=download&id=here put your video id
 
     const tmpFolderPath = path.join(__dirname, 'tmp');
 
