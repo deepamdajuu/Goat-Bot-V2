@@ -6,7 +6,7 @@ module.exports = {
   config: {
     name: "info",
     version: "1.0",
-    author: "deepam",
+    author: "KSHITIZ",
     role: 0,
     cooldown: 5,
     shortDescription: {
