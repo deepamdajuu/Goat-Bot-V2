@@ -1,4 +1,4 @@
-!cmd install info.js const fs = require('fs');
+const fs = require('fs');
 const moment = require('moment-timezone');
 const NepaliDate = require('nepali-date');
 
@@ -47,7 +47,7 @@ module.exports = {
 message.reply(`======[𝗕𝗼𝘁 𝗶𝗻𝗳𝗼:]======
 𝗕𝗼𝘁 𝗽𝗿𝗲𝗳𝗶𝘅: ${botPrefix}
 
-𝗕𝗼𝘁 𝗻𝗮𝗺𝗲 : 𝙶𝚘𝚓𝚘×͜×
+𝗕𝗼𝘁 𝗻𝗮𝗺𝗲 :𝐈𝐓𝐀𝐂𝐇𝐈𓅂ㅤ
 
 𝗢𝘄𝗻𝗲𝗿: ${authorName}
  
