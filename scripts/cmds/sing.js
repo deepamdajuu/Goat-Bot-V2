@@ -1,87 +1,122 @@
+const fs = require("fs-extra");
+const ytdl = require("@neoxr/ytdl-core");
+const yts = require("yt-search");
+const axios = require('axios');
+const tinyurl = require('tinyurl');
+
 module.exports = {
- config: {
- name: "sing",
- version: "1.0",
- role: 0,
- author: "kshitiz",
- cooldowns: 5,
- shortdescription: "download music from YouTube",
- longdescription: "",
- category: "music",
- usages: "{pn} music name",
- dependencies: {
- "fs-extra": "",
- "request": "",
- "axios": "",
- "ytdl-core": "",
- "yt-search": ""
- }
- },
+  config: {
+    name: "sing",
+    version: "1.3",
+    author: "JARiF",
+    countDown: 5,
+    role: 0,
+    category: "media",
+  },
 
- onStart: async ({ api, event }) => {
- const axios = require("axios");
- const fs = require("fs-extra");
- const ytdl = require("ytdl-core");
- const request = require("request");
- const yts = require("yt-search");
+  onStart: async function ({ api, event, message }) {
+    try {
+        if (event.type === "message_reply" && ["audio", "video"].includes(event.messageReply.attachments[0].type)) {
+            const attachmentUrl = event.messageReply.attachments[0].url;
+        const urls = await tinyurl.shorten(attachmentUrl) || args.join(' ');
+        const response = await axios.get(`https://www.api.vyturex.com/songr?url=${urls}`);
 
- const input = event.body;
- const text = input.substring(12);
- const data = input.split(" ");
+        if (response.data && response.data.title) {
+          const song = response.data.title;
+          const originalMessage = await message.reply(`Searching for "${song}"...`);
+          const searchResults = await yts(song);
 
- if (data.length < 2) {
- return api.sendMessage("Please specify a music name.", event.threadID);
- }
+          if (!searchResults.videos.length) {
+            return message.reply("Error: Song not found.");
+          }
 
- data.shift();
- const musicName = data.join(" ");
+          const video = searchResults.videos[0];
+          const videoUrl = video.url;
+          const stream = ytdl(videoUrl, { filter: "audioonly" });
+          const fileName = `music.mp3`;
+          const filePath = `${__dirname}/tmp/${fileName}`;
 
- try {
- api.sendMessage(`✔ | Searching music for "${musicName}".\ parkheu ekxin darling👅`, event.threadID);
+          stream.pipe(fs.createWriteStream(filePath));
 
- const searchResults = await yts(musicName);
- if (!searchResults.videos.length) {
- return api.sendMessage("kunai music vetiyena.", event.threadID, event.messageID);
- }
+          stream.on('response', () => {
+            console.info('[DOWNLOADER]', 'Starting download now!');
+          });
 
- const music = searchResults.videos[0];
- const musicUrl = music.url;
+          stream.on('info', (info) => {
+            console.info('[DOWNLOADER]', `Downloading ${info.videoDetails.title} by ${info.videoDetails.author.name}`);
+          });
 
- const stream = ytdl(musicUrl, { filter: "audioonly" });
+          stream.on('end', async () => {
+            console.info('[DOWNLOADER] Downloaded');
+            if (fs.statSync(filePath).size > 87380608) {
+              fs.unlinkSync(filePath);
+              return message.reply('[ERR] The file could not be sent because it is larger than 83mb.');
+            }
+            const replyMessage = {
+              body: `Title: ${video.title}\nArtist: ${video.author.name}`,
+              attachment: fs.createReadStream(filePath),
+            };
+            await api.unsendMessage(originalMessage.messageID);
+            await message.reply(replyMessage, event.threadID, () => {
+              fs.unlinkSync(filePath);
+            });
+          });
+        } else {
+          return message.reply("Error: Song information not found.");
+        }
+      } else {
+        const input = event.body;
+        const text = input.substring(12);
+        const data = input.split(" ");
 
- const fileName = `${event.senderID}.mp3`;
- const filePath = __dirname + `/cache/${fileName}`;
+        if (data.length < 2) {
+          return message.reply("Please put a song");
+        }
 
- stream.pipe(fs.createWriteStream(filePath));
+        data.shift();
+        const song = data.join(" ");
+        const originalMessage = await message.reply(`Searching your song named "${song}"...`);
+        const searchResults = await yts(song);
 
- stream.on('response', () => {
- console.info('[DOWNLOADER]', 'Starting download now!');
- });
+        if (!searchResults.videos.length) {
+          return message.reply("Error: Invalid request.");
+        }
 
- stream.on('info', (info) => {
- console.info('[DOWNLOADER]', `Downloading music: ${info.videoDetails.title}`);
- });
+        const video = searchResults.videos[0];
+        const videoUrl = video.url;
+        const stream = ytdl(videoUrl, { filter: "audioonly" });
+        const fileName = `music.mp3`;
+        const filePath = `${__dirname}/tmp/${fileName}`;
 
- stream.on('end', () => {
- console.info('[DOWNLOADER] Downloaded');
+        stream.pipe(fs.createWriteStream(filePath));
 
- if (fs.statSync(filePath).size > 26214400) {
- fs.unlinkSync(filePath);
- return api.sendMessage('❌ | The file could not be sent because it is larger than 25MB.', event.threadID);
- }
+        stream.on('response', () => {
+          console.info('[DOWNLOADER]', 'Starting download now!');
+        });
 
- const message = {
- body: `LWH SUNW ABA BEBS💋TITTLE: ${music.title}\ Duration: ${music.duration.timestamp}`,
- attachment: fs.createReadStream(filePath)
- };
+        stream.on('info', (info) => {
+          console.info('[DOWNLOADER]', `Downloading ${info.videoDetails.title} by ${info.videoDetails.author.name}`);
+        });
 
- api.sendMessage(message, event.threadID, () => {
- fs.unlinkSync(filePath);
- });
- });
- } catch (error) {
- console.error('[ERROR]', error);
- api.sendMessage('🥱 ❀ An error occurred while processing the command.', event.threadID);
- }
- }
+        stream.on('end', async () => {
+          console.info('[DOWNLOADER] Downloaded');
+          if (fs.statSync(filePath).size > 26214400) {
+            fs.unlinkSync(filePath);
+            return message.reply('[ERR] The file could not be sent because it is larger than 25MB.');
+          }
+          const replyMessage = {
+            body: `Title: ${video.title}\nArtist: ${video.author.name}`,
+            attachment: fs.createReadStream(filePath),
+          };
+          await api.unsendMessage(originalMessage.messageID);
+          await message.reply(replyMessage, event.threadID, () => {
+            fs.unlinkSync(filePath);
+          });
+        });
+      }
+    } catch (error) {
+      console.error('[ERROR]', error);
+      message.reply("This song is not available.");
+    }
+  },
 };
