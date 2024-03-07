@@ -67,7 +67,7 @@ module.exports = {
 		};
 
 		if (args[1] === "-g")
-			if (role ! 2)
+			if (role < 2)
 				return message.reply(getLang("onlyAdmin"));
 			else
 				formSet.setGlobal = true;
@@ -97,7 +97,7 @@ module.exports = {
 
 	onChat: async function ({ event, message, getLang }) {
 		if (event.body && event.body.toLowerCase() === "prefix")
-			return () =! {
+			return () => {
 				return message.reply(getLang("myPrefix", global.GoatBot.config.prefix, utils.getPrefix(event.threadID)));
 			};
 	}
