@@ -24,7 +24,7 @@ module.exports = {
     const hours = Math.floor((uptime / (60 * 60)) % 24);
     const days = Math.floor(uptime / (60 * 60 * 24));
     const uptimeString = `${days} days ${hours} hours ${minutes} minutes ${seconds} seconds`;
-    api.sendMessage(`Hello Master 🐼,
+    api.sendMessage(`What's up🐼,
 
   🐼 Kshitiz sir your bot is running from
  
