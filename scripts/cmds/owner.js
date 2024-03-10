@@ -39,7 +39,7 @@ config: {
 𝐎𝐰𝐧𝐞𝐫 𝐈𝐧𝐟𝐨𝐫𝐦𝐚𝐭𝐢𝐨𝐧:🧾
 Name: ${ownerInfo.name}
 Gender: ${ownerInfo.gender}
-Age: ${ownerInfo.age}
+Hobbies: ${ownerInfo.hobbies}
 Facebook: ${ownerInfo.facebookLink}
 `;
 
