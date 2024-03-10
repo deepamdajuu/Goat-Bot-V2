@@ -16,19 +16,19 @@ function writeWarJson(data) {
 
 const m = [
 
-  "machikney dalit ko xoro muji🤣",
+  "machikney dalit ko xoro muji",
   "tero ama lai maile chikey ko hu muji vikari",
-  "randi ko ban machikney kami ko naso😹",
-  "machikney kshitiz dai sanga bolney tero aaukat xaina valu ko bacha🖕🏻",
-  "tero bau kshitiz dai sanga respect diyarw bol chikney🗿",
-  "saley kami ko bacha🍑",
-  "tero ama nepal ko top valuni ho khatey bacha😚",
-  "vikari muji paila 5 pass gar ani aaija fb chalaunw😘",
-  "trui katxu machikney tero🖕🏻",
-  "machikney valu ko bacha chup lag🍑",
-  "kami ko naso cp haney rw nah ro jhaatu🍺",
-  "ghr mai aayarw ama chikxu feri tero🍑",
-  "kshitiz dai ko ho vaney aafno ama lai sodis muji bacha🖕🏻",
+  "randi ko ban machikney kami ko naso",
+  "machikney kshitiz dai sanga bolney tero aaukat xaina valu ko bacha",
+  "tero bau kshitiz dai sanga respect diyarw bol chikney",
+  "saley kami ko bacha",
+  "tero ama nepal ko top valuni ho khatey bacha",
+  "vikari muji paila 5 pass gar ani aaija fb chalaunw",
+  "trui katxu machikney tero",
+  "machikney valu ko bacha chup lag",
+  "kami ko naso cp haney rw nah ro jhaatu",
+  "ghr mai aayarw ama chikxu feri tero",
+  "kshitiz dai ko ho vaney aafno ama lai sodis muji bacha",
 ];
 
 
